@@ -1,5 +1,5 @@
 # ClariFi, Inc - Web3 Utility Methods/Helpers
-Various utilities and helper methods for working with Web3, primarily utilizing Python.
+Various tutorials, utilities,  and helper methods for working with Web3, primarily utilizing Python.
 
 ## Code / Project Purpose
 This code is provided to help people new to blockchain/Web3 programming understand how to interact 
