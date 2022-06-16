@@ -1,6 +1,15 @@
 # ClariFi, Inc - Web3 Utility Methods/Helpers
 Various utilities and helper methods for working with Web3, primarily utilizing Python.
 
+### Donations
+If you find any of the code/examples in this repo we would greatly appreciate donations. You may send donations to the following Wallet Address:
+
+**0x3143c205FB04812d8Cd27C9EE901050dDD6996dc**
+
+We prefer AVAX, as we are collecting AVAX to create an Avalanche validator node, however, 
+any and all donations are appreciated!
+
+
 ## PyEnv and Poetry
 This project utilizes the pyenv and poetry modules for Python.
 
