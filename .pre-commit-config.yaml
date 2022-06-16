@@ -1,0 +1,43 @@
+default_language_version:
+  python: python3.9
+
+repos:
+  - repo: local
+    hooks:
+      - id: autoflake
+        name: autoflake
+        stages: [commit]
+        language: system
+        entry: autoflake --in-place --remove-unused-variables --remove-all-unused-imports --recursive avalanche
+        types: [python]
+
+  - repo: local
+    hooks:
+      - id: isort
+        name: isort
+        entry: isort avalanche
+        pass_filenames: false
+        language: system
+        types: [python]
+
+  - repo: local
+    hooks:
+      - id: black
+        name: black
+        entry: black avalanche
+        pass_filenames: false
+        language: system
+
+  - repo: local
+    hooks:
+      - id: flake8
+        name: flake8
+        stages: [commit]
+        language: system
+        entry: flake8 avalanche
+        types: [python]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      - id: end-of-file-fixer
