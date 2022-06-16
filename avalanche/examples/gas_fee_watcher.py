@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Example Google style docstrings.
+"""Retrieve current avax gas fee, every 3 seconds.
 
 This script shows an example of how to call the Avalanche HTTPS RPC node to retrieve the network's current
 gas fee

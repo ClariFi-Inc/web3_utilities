@@ -16,13 +16,18 @@ help:
 	@echo ''
 
 	@echo '${MAGENTA}Avalanche Network:${NC}'
-	@echo '    make avax_gas_fee_watcher                       outputs the current avax network gas fee every 3 seconds            '
+	@echo '    make avax_gas_fee_watcher               outputs the current avax network gas fee every 3 seconds            '
+	@echo '    make avax_get_current_block             outputs the current avax network gas fee every 3 seconds            '
 	@echo ''
 	@echo ''
 
 ################## Avalanche Network Code  #####################################
 avax_gas_fee_watcher: .env
 	@python -m avalanche.examples.gas_fee_watcher
+
+avax_get_current_block: .env
+	@python -m avalanche.examples.get_latest_block_transactions
+
 
 run: .env
 	@python -m $(MODULE)
