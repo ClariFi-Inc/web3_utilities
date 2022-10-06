@@ -7,6 +7,7 @@ You can run this script using the project's root directory Makefile task: avax_g
 
 """
 import csv
+import sys
 import time
 from concurrent import futures
 from os.path import exists
@@ -60,26 +61,26 @@ def get_farmland_data(farmland_id, count_fail=None):
                 "",
                 farmland_json["forSale"],
                 sale_price,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
                 last_price,
-                0,
-                0,
-                0,
                 farmland_json["bigness"],
                 farmland_json["size"],
                 farmland_json["fertility"],
                 farmland_json["multiplier"],
                 farmland_json["score"],
                 farmland_json["averagePerTile"],
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
                 0,
                 0,
                 0,
@@ -138,7 +139,6 @@ def get_farmland_data(farmland_id, count_fail=None):
                 # set the rarity of the farmland based on most rare tile
                 if constants.CHIKN_RARITY_LIST.index(tile["rarity"]) < constants.CHIKN_RARITY_LIST.index(highest_rarity):
                     highest_rarity = tile["rarity"]
-                temp_list[constants.FARMLAND_CSV_HEADER_ROW.index("Rarest Tile")] = highest_rarity
 
                 # set the resource count for this tile type
                 for resource in constants.FARMLAND_TILE_DICT[tile["tile"]]["resources"]:
@@ -149,6 +149,7 @@ def get_farmland_data(farmland_id, count_fail=None):
 
                     count_foragable_tiles += 1
 
+            temp_list[constants.FARMLAND_CSV_HEADER_ROW.index("Rarest Tile")] = highest_rarity
             temp_list[constants.FARMLAND_CSV_HEADER_ROW.index("# Resources")] = count_foragable_tiles
             temp_list[constants.FARMLAND_CSV_HEADER_ROW.index("# Unique Resources")] = len(unique_resource_list)
             temp_list[constants.FARMLAND_CSV_HEADER_ROW.index("# Unique Foragable Tiles")] = len(unique_tile_list)
@@ -193,6 +194,13 @@ def fetch_farmland_by_range(farmland_range):
 
 
 if __name__ == "__main__":
+    FARMLAND_ID = None
+    if len(sys.argv) > 1:
+        try:
+            FARMLAND_ID = int(sys.argv[1])
+        except Exception:
+            sys.exit(f"Invalid farmland id supplied.  Please supply an integer between 1 and {COUNT_FARMLAND}")
+
     # set the range based on a static number of records
     FARMLAND_RANGE_LIST = []
 
@@ -209,11 +217,12 @@ if __name__ == "__main__":
     first_farmland_id = 1
 
     # if you want to run on just ONE farmland id, uncomment this and set the farmland Id you want
-    """
-    FARMLAND_ID = 1640
-    MAX_WORKERS = 1
-    FARMLAND_RANGE_LIST = [(FARMLAND_ID, FARMLAND_ID),]
-    """
+    if FARMLAND_ID is not None:
+        FARMLAND_ID = 774
+        MAX_WORKERS = 1
+        FARMLAND_RANGE_LIST = [
+            (FARMLAND_ID, FARMLAND_ID),
+        ]
 
     if exists("farmland_data.csv"):
         with open(
