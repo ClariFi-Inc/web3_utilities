@@ -130,19 +130,25 @@ def get_farmland_data(farmland_id, count_fail=None):
 
             for tile in farmland_json["tiles"]:
                 # increase the count of this tile type for the farmland
-                temp_list[constants.FARMLAND_CSV_HEADER_ROW.index(tile["tile"])] += 1
+                if tile["tile"] == "Tungsten":
+                    temp_list[33] += 1
+                else:
+                    temp_list[constants.FARMLAND_CSV_HEADER_ROW.index(tile["tile"])] += 1
 
                 # add to unique tile list if needed
                 if tile["tile"] not in unique_tile_list:
                     unique_tile_list.append(tile["tile"])
 
                 # set the rarity of the farmland based on most rare tile
-                if constants.CHIKN_RARITY_LIST.index(tile["rarity"]) < constants.CHIKN_RARITY_LIST.index(highest_rarity):
+                if constants.CHIKN_RARITY_LIST.index(tile["rarity"].upper()) < constants.CHIKN_RARITY_LIST.index(highest_rarity.upper()):
                     highest_rarity = tile["rarity"]
 
                 # set the resource count for this tile type
                 for resource in constants.FARMLAND_TILE_DICT[tile["tile"]]["resources"]:
-                    temp_list[constants.FARMLAND_CSV_HEADER_ROW.index(resource["name"])] += 1
+                    if tile["tile"] == "Tungsten":
+                        temp_list[13] += 1
+                    else:
+                        temp_list[constants.FARMLAND_CSV_HEADER_ROW.index(resource["name"])] += 1
 
                     if resource["name"] not in unique_resource_list:
                         unique_resource_list.append(resource["name"])
@@ -152,7 +158,7 @@ def get_farmland_data(farmland_id, count_fail=None):
             temp_list[constants.FARMLAND_CSV_HEADER_ROW.index("Rarest Tile")] = highest_rarity
             temp_list[constants.FARMLAND_CSV_HEADER_ROW.index("# Resources")] = count_foragable_tiles
             temp_list[constants.FARMLAND_CSV_HEADER_ROW.index("# Unique Resources")] = len(unique_resource_list)
-            temp_list[constants.FARMLAND_CSV_HEADER_ROW.index("# Unique Foragable Tiles")] = len(unique_tile_list)
+            temp_list[constants.FARMLAND_CSV_HEADER_ROW.index("# Unique Tiles")] = len(unique_tile_list)
 
     except Exception as get_ex:
         print(get_ex)
@@ -218,7 +224,6 @@ if __name__ == "__main__":
 
     # if you want to run on just ONE farmland id, uncomment this and set the farmland Id you want
     if FARMLAND_ID is not None:
-        FARMLAND_ID = 774
         MAX_WORKERS = 1
         FARMLAND_RANGE_LIST = [
             (FARMLAND_ID, FARMLAND_ID),
